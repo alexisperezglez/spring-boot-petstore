@@ -1,3 +1,38 @@
+### Project structure
+
+```text
+.
+├── application
+├── boot
+├── docker
+├── domain
+├── infrastructure
+│   ├── driven
+│   └── driving
+└── postman
+```
+
+#### domain
+Contains all bussiness domain classes and exceptions used in the application
+
+#### application
+Contains all application classes and interfaces used in the application. All the use cases definitions and 
+implementations are located here.
+
+#### infrastructure
+Contains all infrastructure classes and interfaces used in the application. Includes all in/out (driving/driven) modules
+which are in charge to offer communication to the outside world.
+
+#### boot
+Contains all boot classes and interfaces used in the application. All the application configuration and 
+initialization is located here.
+
+#### docker
+Contains docker compose file to run and test the application locally.
+
+#### postman
+Contains all postman collections used in the application.
+
 ### Generate API
 
 [openapi-generator doc](https://openapi-generator.tech/docs/generators/spring)
