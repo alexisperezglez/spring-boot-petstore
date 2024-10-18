@@ -1,0 +1,27 @@
+/out/
+# IntelliJ project files
+.idea
+*.iml
+out
+*.log
+*.iws
+*.ipr
+
+# Ignore target folders
+/**/target
+
+# Ignore generated files
+**/*.class
+**/*.jar
+**/*.zip
+**/*.gz
+**/*.tgz
+**/*.tar
+**/*.gzip
+**/*.zipx
+**/*.jarx
+**/*.war
+**/*.ear
+
+/infrastructure/driving/pet-store-example-rest/target
+/.env

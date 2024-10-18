@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: pet-store
+  datasource:
+    url: ${DATASOURCE_URL}
+    username: ${DATASOURCE_USERNAME}
+    password: ${DATASOURCE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  flyway:
+    enabled: ${FLYWAY_ENABLED:true}
+    user: ${DATASOURCE_USERNAME}
+    password: ${DATASOURCE_PASSWORD}
+    locations: classpath:migrations
+    default-schema: adm-pet-store
+    sql-migration-prefix: V
+    sql-migration-separator: __
+    sql-migration-suffixes: .sql
+
+minio:
+  url: ${MINIO_URL:http://localhost:9000}
+  access:
+    name: ${MINIO_ACCESS_KEY:HQcA2zEtfhMO2lD7pFu5}
+    secret: ${MINIO_SECRET_KEY:DeBb7h6TfLSa99arygbtcHwZ4FdOaleyRVe88ZCl}
+  bucket:
+    name: ${MINIO_BUCKET_NAME:pet-store-bucket}

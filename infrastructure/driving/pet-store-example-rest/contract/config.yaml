@@ -1,0 +1,3 @@
+interfaceOnly: true
+delegatePattern: false
+additionalModelTypeAnnotations: "@lombok.Builder;@lombok.Data;@lombok.NoArgsConstructor;@lombok.AllArgsConstructor"
