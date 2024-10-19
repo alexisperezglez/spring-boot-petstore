@@ -6,7 +6,6 @@ import es.home.service.domain.exceptions.PetStoreException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -35,11 +34,13 @@ class UpdatePetUseCaseTest {
     given(petRepositoryPort.findPetById(anyLong()))
         .willReturn(Optional.empty());
 
-    assertThrows(PetStoreException.class, () -> useCase.updatePet(Pet.builder().id(1L).build()));
+    Pet pet = Pet.builder().id(1L).build();
+    assertThrows(PetStoreException.class, () -> useCase.updatePet(pet));
     verify(petRepositoryPort, never()).updatePet(any(Pet.class));
   }
 
   @Test
   void updatePetWithForm() {
+    // TODO: Implement test
   }
 }
