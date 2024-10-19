@@ -2,7 +2,6 @@ package es.home.service.domain.bussines.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 
 @Getter
 @RequiredArgsConstructor
