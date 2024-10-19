@@ -2,6 +2,7 @@ package es.home.service.application.services.pet;
 
 import es.home.service.application.ports.driven.PetRepositoryPort;
 import es.home.service.application.ports.driving.pet.UpdatePetUseCasePort;
+import es.home.service.domain.bussines.enums.PetStatusEnum;
 import es.home.service.domain.bussines.pet.Pet;
 import es.home.service.domain.exceptions.PetStoreException;
 import es.home.service.domain.exceptions.errorcodes.PetErrorEnum;
@@ -22,5 +23,22 @@ public class UpdatePetUseCase implements UpdatePetUseCasePort {
     return petRepositoryPort.findPetById(pet.getId())
         .map(petRepositoryPort::updatePet)
         .orElseThrow(() -> new PetStoreException(PetErrorEnum.PET_NOT_FOUND));
+  }
+
+  @Override
+  public void updatePetWithForm(Long petId, String name, String status) {
+    log.info("Update pet with form: {}", petId);
+    petRepositoryPort.findPetById(petId)
+        .ifPresentOrElse(
+            pet -> {
+              PetStatusEnum statusEnum = PetStatusEnum.fromValue(status);
+              pet.setName(name);
+              pet.setStatus(statusEnum);
+              petRepositoryPort.updatePet(pet);
+            },
+            () -> {
+              throw new PetStoreException(PetErrorEnum.PET_NOT_FOUND);
+            }
+        );
   }
 }

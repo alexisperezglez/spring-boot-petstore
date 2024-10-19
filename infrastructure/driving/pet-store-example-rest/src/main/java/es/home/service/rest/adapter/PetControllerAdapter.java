@@ -91,4 +91,15 @@ public class PetControllerAdapter implements PetAPI {
     final List<Pet> pets = findPetsByTagsUseCasePort.findPetsByTags(tags);
     return ResponseEntity.ok(mapper.fromDomainList(pets));
   }
+
+  @Override
+  public ResponseEntity<Void> updatePetWithForm(Long petId, @Valid String name, @Valid String status) {
+    log.info("Update pet with form: {}", petId);
+    log.info("Name: {}", name);
+    log.info("Status: {}", status);
+
+    updatePetUseCasePort.updatePetWithForm(petId, name, status);
+
+    return ResponseEntity.noContent().build();
+  }
 }
