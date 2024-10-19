@@ -1,8 +1,11 @@
 package es.home.service.rest.adapter;
 
 import es.home.service.application.ports.driving.store.GetInventoryUseCasePort;
+import es.home.service.application.ports.driving.store.PlaceOrderUseCasePort;
+import es.home.service.domain.bussines.order.Order;
 import es.home.service.pet_store_example_api.StoreAPI;
 import es.home.service.pet_store_example_api.model.OrderDTO;
+import es.home.service.rest.mapper.OrderMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +22,9 @@ import java.util.Map;
 public class StoreControllerAdapter implements StoreAPI {
 
   private final GetInventoryUseCasePort getInventoryUseCasePort;
+  private final PlaceOrderUseCasePort placeOrderUseCasePort;
+
+  private final OrderMapper mapper;
 
   @Override
   public ResponseEntity<Void> deleteOrder(Long orderId) {
@@ -42,7 +48,9 @@ public class StoreControllerAdapter implements StoreAPI {
 
   @Override
   public ResponseEntity<OrderDTO> placeOrder(@Valid OrderDTO orderDTO) {
-    // TODO: implement
-    return StoreAPI.super.placeOrder(orderDTO);
+    log.info("Place order: {}", orderDTO);
+    final Order order = mapper.toDomain(orderDTO);
+    final Order placedOrder = placeOrderUseCasePort.placeOrder(order);
+    return ResponseEntity.ok(mapper.fromDomain(placedOrder));
   }
 }
