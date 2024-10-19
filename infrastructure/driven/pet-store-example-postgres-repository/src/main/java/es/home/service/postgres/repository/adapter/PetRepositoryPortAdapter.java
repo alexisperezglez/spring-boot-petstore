@@ -12,7 +12,9 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 @Slf4j
@@ -66,5 +68,14 @@ public class PetRepositoryPortAdapter implements PetRepositoryPort {
     tags = tags.stream().map(String::toLowerCase).toList();
     final List<PetMO> entities = jpaRepository.findAllByTags(tags);
     return mapper.fromModelList(entities);
+  }
+
+  @Override
+  public Map<String, Integer> getInventory() {
+    return jpaRepository.getInventory().stream()
+        .collect(Collectors.toMap(
+            inventoryRecord -> inventoryRecord.getStatus().getValue(),
+            inventoryRecord -> inventoryRecord.getQuantity().intValue()
+        ));
   }
 }

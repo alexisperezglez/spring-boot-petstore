@@ -15,6 +15,7 @@ import java.util.Set;
 @Builder
 @Entity
 @Table(name = "pets")
+@NamedQuery(name = "PetMO.getInventory", query = "SELECT new es.home.service.postgres.repository.model.store.InventoryRecord(p.status, count(p)) FROM PetMO p GROUP BY p.status")
 public class PetMO extends Auditable {
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pets_id_gen")
