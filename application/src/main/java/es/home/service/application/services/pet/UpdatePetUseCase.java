@@ -33,6 +33,9 @@ public class UpdatePetUseCase implements UpdatePetUseCasePort {
         .ifPresentOrElse(
             pet -> {
               PetStatusEnum statusEnum = PetStatusEnum.fromValue(status);
+              if (statusEnum == null) {
+                throw new PetStoreException(PetErrorEnum.INVALID_STATUS);
+              }
               pet.setName(name);
               pet.setStatus(statusEnum);
               petRepositoryPort.updatePet(pet);
