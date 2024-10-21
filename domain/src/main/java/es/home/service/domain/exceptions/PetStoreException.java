@@ -7,8 +7,8 @@ import lombok.Getter;
 @Getter
 public class PetStoreException extends RuntimeException {
 
-  private String code;
-  private int status;
+  private final String code;
+  private final int status;
 
   public PetStoreException(PetStoreError error) {
     super(error.getMessage());

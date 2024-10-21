@@ -3,6 +3,7 @@ package es.home.service.application.ports.driven;
 import es.home.service.domain.bussines.pet.Pet;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface PetRepositoryPort {
@@ -19,4 +20,6 @@ public interface PetRepositoryPort {
   void deletePetById(Long id);
 
   List<Pet> findPetsByTags(List<String> tags);
+
+  Map<String, Integer> getInventory();
 }

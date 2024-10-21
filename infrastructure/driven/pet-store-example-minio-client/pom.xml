@@ -15,8 +15,7 @@
   <packaging>jar</packaging>
 
   <name>pet-store-example-minio-client</name>
-  <description>Pet store example implementation</description>
-  <url>http://maven.apache.org</url>
+  <description>Pet store example minio driven adapter implementation</description>
 
   <properties>
     <maven.compiler.source>21</maven.compiler.source>

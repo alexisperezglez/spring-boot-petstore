@@ -30,11 +30,11 @@ public class UploadFileUseCase implements UploadFileUseCasePort {
             .ifPresentOrElse(
                 pet -> {
                   log.info("Pet found: {}", pet);
-                  String fileName = fileStorageClientPort.uploadFile(petId, additionalMetadata, body);
+                  String photoUrl = fileStorageClientPort.uploadFile(petId, additionalMetadata, body);
                   if (CollectionUtils.isEmpty(pet.getPhotoUrls())) {
                     pet.setPhotoUrls(new ArrayList<>());
                   }
-                  pet.getPhotoUrls().add(fileName);
+                  pet.getPhotoUrls().add(photoUrl);
                   petRepositoryPort.updatePet(pet);
                 },
                 () -> {

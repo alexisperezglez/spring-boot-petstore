@@ -9,7 +9,6 @@
 
   <name>pet-store-example</name>
   <description>Pet store example implementation</description>
-  <url>http://maven.apache.org</url>
 
   <properties>
     <java.version>21</java.version>
@@ -62,12 +61,6 @@
 
   <dependencies>
 
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
   </dependencies>
 
   <build>

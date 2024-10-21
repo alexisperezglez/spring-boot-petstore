@@ -1,7 +1,6 @@
 package es.home.service.rest.mapper;
 
 import es.home.service.domain.bussines.pet.Pet;
-import es.home.service.pet_store_example_api.model.ApiResponseDTO;
 import es.home.service.pet_store_example_api.model.PetDTO;
 import org.mapstruct.Mapper;
 

@@ -5,6 +5,7 @@ import es.home.service.application.ports.driving.pet.GetPetByIdUseCasePort;
 import es.home.service.domain.bussines.pet.Pet;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -17,7 +18,7 @@ public class GetPetByIdUseCase implements GetPetByIdUseCasePort {
   private final PetRepositoryPort petRepositoryPort;
 
   @Override
-  public Optional<Pet> getPetById(Long petId) {
+  public Optional<Pet> getPetById(@NonNull Long petId) {
     log.info("Get pet by id {}", petId);
     return petRepositoryPort.getById(petId);
   }
