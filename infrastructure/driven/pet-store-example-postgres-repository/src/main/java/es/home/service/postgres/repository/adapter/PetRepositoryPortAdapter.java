@@ -3,6 +3,8 @@ package es.home.service.postgres.repository.adapter;
 import es.home.service.application.ports.driven.PetRepositoryPort;
 import es.home.service.domain.bussines.enums.PetStatusEnum;
 import es.home.service.domain.bussines.pet.Pet;
+import es.home.service.domain.exceptions.PetStoreException;
+import es.home.service.domain.exceptions.errorcodes.PetErrorEnum;
 import es.home.service.postgres.repository.PetMOJpaRepository;
 import es.home.service.postgres.repository.mapper.PetMOMapper;
 import es.home.service.postgres.repository.model.pet.PetMO;
@@ -49,7 +51,11 @@ public class PetRepositoryPortAdapter implements PetRepositoryPort {
 
   @Override
   public Pet updatePet(Pet pet) {
-    return savePet(pet);
+    boolean exists = jpaRepository.existsById(pet.getId());
+    if (exists)
+      return savePet(pet);
+
+    throw new PetStoreException(PetErrorEnum.PET_NOT_FOUND);
   }
 
   @Override
