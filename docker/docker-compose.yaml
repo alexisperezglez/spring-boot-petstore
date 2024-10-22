@@ -4,6 +4,7 @@ networks:
         name: petstore-network
 
 services:
+  # Postgres database
   postgres:
     image: postgres
     container_name: pg-petstore
@@ -23,6 +24,7 @@ services:
     networks:
       - petstore-network
 
+  # Minio server for file storage (pet images)
   minio:
     image: quay.io/minio/minio:latest
     container_name: minio-petstore

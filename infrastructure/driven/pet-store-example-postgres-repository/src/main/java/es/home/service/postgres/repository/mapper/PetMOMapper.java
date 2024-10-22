@@ -7,6 +7,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public interface PetMOMapper {
   @Named("stringArrayToStringList")
   static String[] stringArrayToStringList(List<String> stringList) {
     if ( stringList == null ) {
-      return null;
+      return new String[0];
     }
 
     return stringList.toArray(new String[0]);
@@ -31,7 +32,7 @@ public interface PetMOMapper {
   @Named("stringListToStringArray")
   static List<String> stringListToStringArray(String[] stringArray) {
     if ( stringArray == null ) {
-      return null;
+      return new ArrayList<>();
     }
 
     return Arrays.asList(stringArray);

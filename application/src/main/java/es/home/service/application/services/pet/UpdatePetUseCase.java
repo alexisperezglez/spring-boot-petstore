@@ -8,6 +8,7 @@ import es.home.service.domain.exceptions.PetStoreException;
 import es.home.service.domain.exceptions.errorcodes.PetErrorEnum;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,7 +19,7 @@ public class UpdatePetUseCase implements UpdatePetUseCasePort {
   private final PetRepositoryPort petRepositoryPort;
 
   @Override
-  public Pet updatePet(Pet pet) {
+  public Pet updatePet(@NonNull Pet pet) {
     log.info("Update pet: {}", pet);
     return petRepositoryPort.findPetById(pet.getId())
         .map(petRepositoryPort::updatePet)
@@ -26,12 +27,15 @@ public class UpdatePetUseCase implements UpdatePetUseCasePort {
   }
 
   @Override
-  public void updatePetWithForm(Long petId, String name, String status) {
+  public void updatePetWithForm(@NonNull Long petId, @NonNull String name, @NonNull String status) {
     log.info("Update pet with form: {}", petId);
     petRepositoryPort.findPetById(petId)
         .ifPresentOrElse(
             pet -> {
               PetStatusEnum statusEnum = PetStatusEnum.fromValue(status);
+              if (statusEnum == null) {
+                throw new PetStoreException(PetErrorEnum.INVALID_STATUS);
+              }
               pet.setName(name);
               pet.setStatus(statusEnum);
               petRepositoryPort.updatePet(pet);

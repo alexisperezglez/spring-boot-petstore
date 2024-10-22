@@ -3,6 +3,8 @@ package es.home.service.postgres.repository.adapter;
 import es.home.service.application.ports.driven.PetRepositoryPort;
 import es.home.service.domain.bussines.enums.PetStatusEnum;
 import es.home.service.domain.bussines.pet.Pet;
+import es.home.service.domain.exceptions.PetStoreException;
+import es.home.service.domain.exceptions.errorcodes.PetErrorEnum;
 import es.home.service.postgres.repository.PetMOJpaRepository;
 import es.home.service.postgres.repository.mapper.PetMOMapper;
 import es.home.service.postgres.repository.model.pet.PetMO;
@@ -12,7 +14,9 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 @Slf4j
@@ -47,7 +51,11 @@ public class PetRepositoryPortAdapter implements PetRepositoryPort {
 
   @Override
   public Pet updatePet(Pet pet) {
-    return savePet(pet);
+    boolean exists = jpaRepository.existsById(pet.getId());
+    if (exists)
+      return savePet(pet);
+
+    throw new PetStoreException(PetErrorEnum.PET_NOT_FOUND);
   }
 
   @Override
@@ -66,5 +74,14 @@ public class PetRepositoryPortAdapter implements PetRepositoryPort {
     tags = tags.stream().map(String::toLowerCase).toList();
     final List<PetMO> entities = jpaRepository.findAllByTags(tags);
     return mapper.fromModelList(entities);
+  }
+
+  @Override
+  public Map<String, Integer> getInventory() {
+    return jpaRepository.getInventory().stream()
+        .collect(Collectors.toMap(
+            inventoryRecord -> inventoryRecord.getStatus().getValue(),
+            inventoryRecord -> inventoryRecord.getQuantity().intValue()
+        ));
   }
 }
